@@ -1,16 +1,15 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello_world():
-    return "<h1>Hello, World! trying debug mode</h1>"
-
-@app.route('/about/')
-def about_page():
-    return f'<h1>About Pagee of !!</h1>'
+@app.route('/')
+@app.route('/home/')  # adding muliple routes to the same method
+def home_page():
+    return render_template('home.html')
 
 # Dynamic Routes!!!  ==> <username>
 @app.route('/about/<username>')
-def about_page_username(username):
-    return f'<h1>About Pagee of {username}!!!</h1>'
+@app.route('/about/')  # adding multiple routes to the same method
+def about_page_username(username=None):
+    txt = username if username else 'Nobody'
+    return f'<h1>About Pagee of {txt}!!!</h1>'
